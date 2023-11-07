@@ -127,6 +127,8 @@ class MyParser(object):
                     | FLOAT_LITERAL
                     | STRING_LITERAL
                     | IDENTIFIER
+                    | COMMENT
+                    | MULTILINE_COMMENT
                     | EQUAL
                     | DOUBLEQUOTE
                     | DOLLAR
@@ -153,3 +155,6 @@ class MyParser(object):
     def test(self, data):
         result = self.parser.parse(data,lexer=self.lexer)
         print(result)
+
+'''To operate parser independently, just Uncomment the below code'''
+# TODO: write code to use parser independantly.

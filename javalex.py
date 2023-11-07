@@ -24,7 +24,7 @@ class MyLexer(object):
         'public' : 'PUBLIC',
         'return' : 'RETURN',
         'static': 'STATIC',
-        'string': 'STRING',
+        'String': 'STRING',
         'this': 'THIS',
         'System.out.println': 'PRINT',
         'void': 'VOID',
@@ -34,6 +34,8 @@ class MyLexer(object):
         self.tokens = [
             'INTEGER_LITERAL',
             'IDENTIFIER',
+            'COMMENT',
+            'MULTILINE_COMMENT',
             'LE',
             'GE',
             'NE',
@@ -118,6 +120,11 @@ class MyLexer(object):
         pass
         # No return value. Token discarded
 
+    def t_MULTILINE_COMMENT(self, t):
+        r'\/\*(.|\n)*?\*\/'
+        t.lexer.lineno += t.value.count('\n')
+        pass
+
     def t_FLOAT_LITERAL(self, t):
         r'\d+\.\d+'
         t.value = float(t.value)
@@ -149,20 +156,23 @@ class MyLexer(object):
             print(tok)
             print(tok.type, tok.value, tok.lineno, tok.lexpos)
 
-# lexer = lex.lex()
 
-data = '''
-class ABC {
+'''To use Lexer Independently, uncomment the below code'''
+# mylexer = MyLexer()
+# lexer = mylexer.build()
+
+# data = '''
+# class ABC {
     
-    public static void main(int a, int b) {
-        System.out.println("Some Random Function");
-    }
-}
-'''
+#     public static void main(int a, int b) {
+#         System.out.println("Some Random Function");
+#     }
+# }
+# '''
 
 # lexer.input(data)
 
-# #Tokenize
+# # Tokenize
 # while True:
 #     tok = lexer.token()
 #     if not tok: 
